@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Login • SGBIT Events</title>
+  <!-- Google Fonts + Font Awesome (matches homepage) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafc;
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eef2ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 12px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ========= NAVBAR (identical to homepage) ========= */
+    .navbar {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+    }
+    .logo h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .logo span {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #334155;
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a i {
+      font-size: 0.9rem;
+    }
+    .nav-links a:hover {
+      color: #8b5cf6;
+      transform: translateY(-1px);
+    }
+    .nav-links a.active {
+      color: #8b5cf6;
+      font-weight: 600;
+      border-bottom: 2px solid #8b5cf6;
+      padding-bottom: 4px;
+    }
+    .btn-outline-light {
+      background: transparent;
+      border: 1.5px solid #8b5cf6;
+      padding: 6px 16px;
+      border-radius: 40px;
+      color: #8b5cf6;
+      font-weight: 600;
+    }
+    .btn-outline-light:hover {
+      background: #8b5cf610;
+    }
+
+    /* ========= LOGIN PAGE HERO / CARD SECTION ========= */
+    .login-wrapper {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(125deg, #ffffff 0%, #f5f3ff 100%);
+    }
+    .login-card {
+      background: white;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.02);
+      padding: 2.2rem 2rem 2.5rem;
+      transition: all 0.2s ease;
+      border: 1px solid #f0eefb;
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .login-header .icon-circle {
+      background: #ede9fe;
+      width: 70px;
+      height: 70px;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .login-header .icon-circle i {
+      font-size: 2.4rem;
+      color: #7c3aed;
+    }
+    .login-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e293b, #4c1d95);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .login-header p {
+      color: #5b6e8c;
+      font-size: 0.9rem;
+    }
+    .input-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .input-group label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .input-group label i {
+      color: #8b5cf6;
+      font-size: 0.9rem;
+    }
+    .input-group input {
+      padding: 0.9rem 1rem;
+      border-radius: 1rem;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      background: #fefefe;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0 1.8rem;
+      font-size: 0.8rem;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: #475569;
+    }
+    .forgot-link {
+      color: #8b5cf6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+    .btn-login {
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 14px -8px rgba(139, 92, 246, 0.4);
+    }
+    .btn-login:hover {
+      background: #7c3aed;
+      transform: translateY(-2px);
+    }
+    .register-prompt {
+      text-align: center;
+      border-top: 1px solid #edf2f7;
+      padding-top: 1.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #475569;
+    }
+    .register-prompt a {
+      color: #8b5cf6;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .register-prompt a:hover {
+      text-decoration: underline;
+    }
+    .demo-creds {
+      background: #f8fafc;
+      border-radius: 1rem;
+      padding: 0.8rem;
+      margin-top: 1.2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #4b5563;
+      border: 1px dashed #cbd5e1;
+    }
+    .demo-creds span {
+      font-weight: 600;
+      color: #8b5cf6;
+    }
+
+    /* ========= FOOTER (perfect match with homepage) ========= */
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      margin-top: 2rem;
+      padding: 2.5rem 0 1.5rem;
+      border-radius: 2rem 2rem 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-col h4 {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      color: #94a3b8;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .footer-col a:hover {
+      color: #a78bfa;
+    }
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .social-icons a {
+      background: #1e293b;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid #1e293b;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        padding: 0 20px;
+      }
+      .nav-flex {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        justify-content: center;
+      }
+      .login-card {
+        padding: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR: consistent with homepage, active 'Login' highlighted -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-flex">
+      <div class="logo">
+        <h2>SGBIT<span>Events</span></h2>
+        <div style="font-size: 0.7rem; letter-spacing: 0.5px;">✨ experience elevated</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html"><i class="fas fa-landmark"></i> About college</a>
+        <a href="branch-events.html"><i class="fas fa-calendar-alt"></i> Branch Events</a>
+        <a href="login.html" class="active"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+        <a href="create-event.html"><i class="fas fa-pen-ruler"></i> Create Event</a>
+        <a href="feedback.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN LOGIN SECTION: polished card design -->
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="icon-circle">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h1>Welcome back</h1>
+      <p>Sign in to access your event dashboard</p>
+    </div>
+
+    <!-- login form with improved semantics -->
+    <form id="loginForm" action="#" method="POST">
+      <div class="input-group">
+        <label><i class="fas fa-user-circle"></i> Username or Email</label>
+        <input type="text" id="username" placeholder="student@example.com / johndoe" required>
+      </div>
+      <div class="input-group">
+        <label><i class="fas fa-key"></i> Password</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+      </div>
+      <div class="login-options">
+        <label class="checkbox-label">
+          <input type="checkbox"> <span>Keep me logged in</span>
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn-login"><i class="fas fa-arrow-right-to-bracket"></i> Log in</button>
+    </form>
+
+    <div class="register-prompt">
+      Don't have an account? <a href="register.html">Create account</a>
+    </div>
+
+    <!-- subtle demo credentials hint (optional, matches modern login pages) -->
+    <div class="demo-creds">
+      <i class="fas fa-flask"></i> Demo: <span>admin@nexus.com</span> / password: <span>demo123</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER: fully matching the homepage design with all original links -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About SG Balekundri</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Why Choose Us</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Press & Media</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <ul>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Let Us Help You</h4>
+        <ul>
+          <li><a href="#">Your Account</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Event Booking Guide</a></li>
+          <li><a href="#">Cancellation Policy</a></li>
+          <li><a href="#">Contact Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Join the community</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.75rem;">Get latest event alerts</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>© 2K26 Events — Part of SG Balekundri Tech Community. All rights reserved. ✨ Seamless event discovery</p>
+    </div>
+  </div>
+</footer>
+
+<!-- tiny interactive script: demo feedback + prevent default for demo (just to show smooth UX) -->
+<script>
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const usernameField = document.getElementById('username');
+      const passwordField = document.getElementById('password');
+      const username = usernameField.value.trim();
+      const password = passwordField.value.trim();
+      
+      if (username === "" || password === "") {
+        // gentle error simulation
+        alert("✨ Please enter both username/email and password to continue.");
+        return;
+      }
+      
+      // For demo purposes, show success message and redirect (optional)
+      // In real project you'd connect to backend. But here we simulate modern feedback.
+      alert(`Welcome back, ${username}! 🎉\nRedirecting to your dashboard... (Demo mode)`);
+      // Uncomment if you have a dashboard page: window.location.href = "dashboard.html";
+      // For now just reset or keep as is, but we show the interactive feel.
+      // If you want to mimic a real login, you can redirect to home:
+      // window.location.href = "index.html";
+    });
+  }
+
+  // tiny additional effect: add floating label modern behavior (optional)
+  console.log("Login page — fully aligned with homepage style");
+</script>
+
+<!-- extra hover micro-animations for better experience -->
+<style>
+  .login-card {
+    transition: transform 0.2s ease, box-shadow 0.2s;
+  }
+  .login-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 40px -18px rgba(0, 0, 0, 0.2);
+  }
+  .input-group input {
+    transition: 0.2s;
+  }
+  .btn-login:active {
+    transform: scale(0.97);
+  }
+</style>
+
+</body>
+</html>

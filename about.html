@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>About college • SG Balekundri Institute of Technology,Belgavi,Karnataka,India.</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafc;
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eef2ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 12px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ========= NAVBAR (identical to homepage) ========= */
+    .navbar {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+    }
+    .logo h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .logo span {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #334155;
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a i {
+      font-size: 0.9rem;
+    }
+    .nav-links a:hover {
+      color: #8b5cf6;
+      transform: translateY(-1px);
+    }
+    .nav-links a.active {
+      color: #8b5cf6;
+      font-weight: 600;
+      border-bottom: 2px solid #8b5cf6;
+      padding-bottom: 4px;
+    }
+
+    /* ========= HERO SECTION (about college) ========= */
+    .about-hero {
+      background: linear-gradient(125deg, #ffffff 0%, #f5f3ff 100%);
+      padding: 3rem 0 2rem;
+      text-align: center;
+    }
+    .hero-badge {
+      background: #ede9fe;
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6d28d9;
+      margin-bottom: 1rem;
+    }
+    .about-hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e293b, #4c1d95);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.75rem;
+    }
+    .tagline {
+      color: #5b6e8c;
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* ========= MAIN CONTENT ========= */
+    .about-main {
+      padding: 2.5rem 0 3rem;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+    .info-card {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+      border: 1px solid #f0eefb;
+      transition: transform 0.2s;
+    }
+    .info-card:hover {
+      transform: translateY(-3px);
+    }
+    .info-card h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e293b;
+    }
+    .info-card h2 i {
+      color: #8b5cf6;
+    }
+    .info-text {
+      color: #334155;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .highlight-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .stat-bubble {
+      background: #f1f5f9;
+      border-radius: 1.2rem;
+      padding: 0.8rem 1.2rem;
+      text-align: center;
+      flex: 1;
+      min-width: 100px;
+    }
+    .stat-number {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #8b5cf6;
+    }
+    .vision-card, .mission-card {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 1.8rem;
+      border-left: 5px solid #8b5cf6;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+      margin-bottom: 1.5rem;
+    }
+    .vision-card h3, .mission-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .campus-highlight {
+      background: linear-gradient(115deg, #f8fafc, #ffffff);
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border: 1px solid #ede9fe;
+    }
+    .feature-list {
+      list-style: none;
+      margin-top: 1rem;
+    }
+    .feature-list li {
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .feature-list i {
+      color: #8b5cf6;
+      width: 24px;
+    }
+
+    /* ========= FOOTER (consistent) ========= */
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      margin-top: 2rem;
+      padding: 2.5rem 0 1.5rem;
+      border-radius: 2rem 2rem 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-col h4 {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      color: #94a3b8;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .footer-col a:hover {
+      color: #a78bfa;
+    }
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .social-icons a {
+      background: #1e293b;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid #1e293b;
+      font-size: 0.75rem;
+    }
+    @media (max-width: 680px) {
+      .container {
+        padding: 0 20px;
+      }
+      .nav-flex {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        justify-content: center;
+      }
+      .about-hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR with active About college link -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-flex">
+      <div class="logo">
+        <h2>SGBIT<span>Events</span></h2>
+        <div style="font-size: 0.7rem;">✨ experience elevated</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html" class="active"><i class="fas fa-landmark"></i> About college</a>
+        <a href="branch-events.html"><i class="fas fa-calendar-alt"></i> Branch Events</a>
+        <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+        <a href="create-event.html"><i class="fas fa-pen-ruler"></i> Create Event</a>
+        <a href="feedback.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero section -->
+<div class="about-hero">
+  <div class="container">
+    <div class="hero-badge"><i class="fas fa-university"></i> Est. 2008 • Approved by AICTE</div>
+    <h1>SG Balekundri Institute of Technology</h1>
+    <p class="tagline">Where innovation meets excellence — shaping future engineers and leaders.</p>
+  </div>
+</div>
+
+<main class="about-main">
+  <div class="container">
+    <div class="about-grid">
+      <!-- LEFT COLUMN: history & core details -->
+      <div>
+        <div class="info-card">
+          <h2><i class="fas fa-history"></i> Our Legacy</h2>
+          <div class="info-text">
+            <p>S.G.Balekundri Institute of Technology was established in the year <strong>2008</strong>, by <strong>Shri Siddhharameshwar Education Trust</strong>. It is located in the heart of Belagavi city, Karnataka.</p>
+            <p style="margin-top: 1rem;">Within ten years of its establishment, the college has entrenched itself in the league of the most reputed institutes of Belagavi. The institution is known for academic rigor, vibrant campus life, and strong industry connections.</p>
+          </div>
+          <div class="highlight-stats">
+            <div class="stat-bubble"><div class="stat-number">2008</div><div>Year of Est.</div></div>
+            <div class="stat-bubble"><div class="stat-number">10+</div><div>Acres Campus</div></div>
+            <div class="stat-bubble"><div class="stat-number">#Top</div><div>Reputed Institute</div></div>
+          </div>
+        </div>
+
+        <div class="campus-highlight">
+          <h3 style="display: flex; gap: 8px; align-items: center;"><i class="fas fa-map-marked-alt" style="color:#8b5cf6;"></i> Campus & Infrastructure</h3>
+          <p>The college campus is spread over <strong>10 acres of land</strong>, in the midst of an educational locality, flanked by a number of reputed educational institutes. Highly developed infrastructure for the entire engineering course is available, including:</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-flask"></i> State-of-the-art laboratories</li>
+            <li><i class="fas fa-laptop-code"></i> Digital classrooms & innovation center</li>
+            <li><i class="fas fa-book"></i> Central library with digital resources</li>
+            <li><i class="fas fa-wifi"></i> High-speed campus-wide connectivity</li>
+            <li><i class="fas fa-futbol"></i> Sports arena & recreation zones</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Vision, Mission, Location -->
+      <div>
+        <div class="vision-card">
+          <h3><i class="fas fa-eye"></i> Vision</h3>
+          <p>To emerge as a center of excellence in engineering education, fostering innovation, research, and ethical leaders who contribute to global technological advancement and societal well-being.</p>
+        </div>
+        <div class="mission-card">
+          <h3><i class="fas fa-bullseye"></i> Mission</h3>
+          <p>• Provide quality technical education with strong industry interface.<br>
+          • Nurture creativity, critical thinking, and entrepreneurial spirit.<br>
+          • Instill values of integrity, teamwork, and lifelong learning.<br>
+          • Bridge the gap between academia and industry demands.</p>
+        </div>
+
+        <div class="info-card" style="margin-top: 0.5rem;">
+          <h2><i class="fas fa-location-dot"></i> Location & Connectivity</h2>
+          <div class="info-text">
+            <p><strong>📍 Belagavi (Belgaum), Karnataka</strong> — The institute is situated in the heart of the city, easily accessible from major transport hubs. Surrounded by reputed educational institutions, the campus offers a conducive environment for holistic learning.</p>
+            <p style="margin-top: 12px;"><i class="fas fa-road"></i> Shivbasav Nagar: Belagavi , Karnataka 590010, India<br>
+            <i class="fas fa-bus"></i> Well-connected by city bus services & major highways.</p>
+          </div>
+          <div style="background: #eef2ff; padding: 0.8rem; border-radius: 1rem; margin-top: 0.5rem; text-align: center;">
+            <i class="fas fa-map-pin"></i> S.G.Balekundri Institute of Technology, Nehrunagar, Belagavi – 590010
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- additional message: events and community -->
+    <div style="background: linear-gradient(110deg, #ede9fe, #ffffff); border-radius: 2rem; padding: 1.8rem; margin-top: 2rem; text-align: center;">
+      <h3 style="font-size: 1.4rem;"><i class="fas fa-calendar-check"></i> A Hub for Events & Cultural Fests</h3>
+      <p style="margin-top: 0.5rem;">SGBIT regularly hosts technical symposiums, cultural festivals, hackathons, and leadership summits. Our event management system helps you stay connected with the vibrant campus life.</p>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER (matching homepage) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About SGBIT</h4>
+        <ul>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="#">Why Choose Us</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Press & Media</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <ul>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Let Us Help You</h4>
+        <ul>
+          <li><a href="#">Your Account</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Event Booking Guide</a></li>
+          <li><a href="#">Cancellation Policy</a></li>
+          <li><a href="#">Contact Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Join the community</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.75rem;">Get latest event alerts</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>2K26 departments Event — Part of SG Balekundri Tech Community. All rights reserved.. ✨ Seamless event discovery</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // small interactive console greeting
+  console.log("📖 About SGBIT page loaded — official details integrated.");
+</script>
+</body>
+</html>

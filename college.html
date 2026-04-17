@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SG Balekundri Institute of Technology | Home</title>
+    <style>
+        /* ---------- CSS VARIABLES (ALL COLORS + IMAGES) ---------- */
+        :root {
+            --primary-navy: #0A2F44;
+            --primary-amber: #E67E22;
+            --primary-amber-light: #F39C4B;
+            --dark-bg: #1E2A38;
+            --bg-light: #FDF8F0;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --border-light: #E2E8F0;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 20px rgba(0,0,0,0.1);
+            --transition: 0.2s ease;
+
+            /* Background image paths (replace with your own) */
+            --bg-hero: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600'); /* campus */
+            --bg-stats: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600'); /* library */
+            --bg-cta: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600'); /* students */
+            --bg-pattern: url('https://www.transparenttextures.com/patterns/cubes.png'); /* subtle pattern */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* ===== MAIN NAVIGATION (same as before) ===== */
+        .main-nav {
+            background-color: var(--primary-navy);
+            color: var(--text-light);
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 0;
+        }
+
+        .logo-area span {
+            color: var(--primary-amber);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            padding: 18px 12px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            background-color: var(--primary-amber);
+            border-radius: 4px;
+        }
+
+        .dropdown > a::after {
+            content: " ▼";
+            font-size: 0.7rem;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--dark-bg);
+            min-width: 220px;
+            list-style: none;
+            padding: 0;
+            border-radius: 0 0 8px 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 15px;
+            font-size: 0.85rem;
+        }
+
+        /* ===== HERO SECTION WITH BACKGROUND IMAGE ===== */
+        .hero {
+            background: linear-gradient(135deg, rgba(10,47,68,0.85), rgba(230,126,34,0.7)),
+                        var(--bg-hero) center/cover no-repeat;
+            height: 550px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero .btn {
+            background-color: var(--primary-amber);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .hero .btn:hover {
+            background-color: var(--primary-navy);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== QUICK LINKS BAR ===== */
+        .quick-links {
+            background-color: var(--dark-bg);
+            padding: 12px 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .quick-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.85rem;
+        }
+
+        .quick-container a {
+            color: var(--primary-amber);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .quick-container a:hover {
+            text-decoration: underline;
+            color: var(--primary-amber-light);
+        }
+
+        /* ===== STATS SECTION WITH BACKGROUND IMAGE ===== */
+        .stats-section {
+            background: linear-gradient(rgba(30,42,56,0.9), rgba(30,42,56,0.9)),
+                        var(--bg-stats) center/cover fixed;
+            padding: 60px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: var(--primary-amber);
+        }
+
+        /* ===== SERVICES SECTION (without background image, but clean) ===== */
+        .services-section {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-navy);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--primary-amber);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            border: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-amber);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-navy);
+            margin-bottom: 15px;
+        }
+
+        /* ===== ACCREDITATION + CONTACT SECTION ===== */
+        .info-section {
+            background-color: var(--bg-light);
+            padding: 40px 20px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .info-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: space-between;
+        }
+
+        .accreditation {
+            flex: 2;
+            min-width: 260px;
+        }
+
+        .accreditation h3, .contact-col h3 {
+            color: var(--primary-navy);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-left: 5px solid var(--primary-amber);
+            padding-left: 15px;
+        }
+
+        .accred-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+        }
+
+        .accred-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .accred-links a:hover {
+            color: var(--primary-amber);
+        }
+
+        .contact-col {
+            flex: 1;
+            min-width: 280px;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ===== CALL-TO-ACTION SECTION WITH BACKGROUND IMAGE ===== */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(10,47,68,0.85), rgba(230,126,34,0.8)),
+                        var(--bg-cta) center/cover no-repeat;
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-btn {
+            background-color: var(--primary-amber);
+            color: white;
+            padding: 14px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .cta-btn:hover {
+            background-color: white;
+            color: var(--primary-navy);
+        }
+
+        /* ===== FOOTER (thick with amber top border) ===== */
+        .site-footer {
+            background-color: var(--primary-navy);
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 4px solid var(--primary-amber);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero {
+                height: 450px;
+            }
+        }
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== MAIN NAVIGATION ===== -->
+<div class="main-nav">
+    <div class="nav-container">
+        <div class="logo-area">
+            🎓 <span>SG Balekundri</span> Institute of Technology
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li class="dropdown"><a href="#">About ▼</a><ul class="dropdown-menu"><li><a href="#">Vision & Mission</a></li><li><a href="#">Management</a></li></ul></li>
+            <li class="dropdown"><a href="#">Programmes ▼</a><ul class="dropdown-menu"><li><a href="#">UG</a></li><li><a href="#">PG</a></li></ul></li>
+            <li class="dropdown"><a href="#">Cells ▼</a></li>
+            <li class="dropdown"><a href="#">Student Clubs ▼</a></li>
+            <li><a href="#">Placements</a></li>
+            <li><a href="#">Incubation Centers</a></li>
+            <li class="dropdown"><a href="#">R&amp;D ▼</a></li>
+            <li><a href="#">Consultancy</a></li>
+            <li><a href="#">Alumni</a></li>
+            <li class="dropdown"><a href="#">Admissions ▼</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- ===== HERO SECTION WITH BACKGROUND IMAGE ===== -->
+<div class="hero">
+    <div class="hero-content">
+        <h1>Welcome to SG Balekundri Institute of Technology</h1>
+        <p>Empowering minds, building futures – Excellence in Engineering & Management Education</p>
+        <a href="#" class="btn" target="_blank">Explore Admissions →</a>
+    </div>
+</div>
+
+<!-- ===== QUICK LINKS ===== -->
+<div class="quick-links">
+    <div class="quick-container">
+        <a href="#">Quick Links</a> <a href="#">Accreditation</a> <a href="#">E-learning</a>
+        <a href="#">Statutory</a> <a href="#">Contact Us</a> <a href="#">AICTE Feedback</a>
+        <a href="#">Digital Library</a> <a href="#">Mandatory Disclosure</a> <a href="#">Calendar of Events</a>
+    </div>
+</div>
+
+<!-- ===== STATS SECTION WITH BACKGROUND IMAGE (fixed parallax) ===== -->
+<div class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item"><div class="stat-number">5000+</div><div>Students</div></div>
+        <div class="stat-item"><div class="stat-number">200+</div><div>Faculty</div></div>
+        <div class="stat-item"><div class="stat-number">90%</div><div>Placement Rate</div></div>
+        <div class="stat-item"><div class="stat-number">50+</div><div>Industry Partners</div></div>
+    </div>
+</div>
+
+<!-- ===== OUR SERVICES SECTION ===== -->
+<div class="services-section">
+    <h2 class="section-title">🎓 Our Services</h2>
+    <p class="section-subtitle">What SG Balekundri Institute of Technology offers to students, industry, and society</p>
+    <div class="services-grid">
+        <div class="service-card"><div class="service-icon">📚</div><h3>Academic Programmes</h3><p>UG, PG, PhD – Engineering, Management, Computer Applications. AICTE approved.</p><a href="#" class="service-link" target="_blank">Learn more →</a></div>
+        <div class="service-card"><div class="service-icon">💼</div><h3>Placements & Training</h3><p>90%+ placement record. Aptitude, soft skills, mock interviews.</p><a href="#" class="service-link" target="_blank">Explore →</a></div>
+        <div class="service-card"><div class="service-icon">🔬</div><h3>Research & Development</h3><p>Funded projects, innovation labs, publication support.</p><a href="#" class="service-link" target="_blank">View R&D →</a></div>
+        <div class="service-card"><div class="service-icon">🤝</div><h3>Consultancy Services</h3><p>Technical consultancy, testing, industry training.</p><a href="#" class="service-link" target="_blank">Request →</a></div>
+        <div class="service-card"><div class="service-icon">🚀</div><h3>Incubation Center</h3><p>Mentorship, seed funding, co-working space for startups.</p><a href="#" class="service-link" target="_blank">Start venture →</a></div>
+        <div class="service-card"><div class="service-icon">🎭</div><h3>Student Clubs & Cells</h3><p>Technical, cultural, sports, women's cell, anti-ragging.</p><a href="#" class="service-link" target="_blank">Join club →</a></div>
+    </div>
+</div>
+
+<!-- ===== ACCREDITATION + CONTACT ===== -->
+<div class="info-section">
+    <div class="info-grid">
+        <div class="accreditation">
+            <h3>Accreditations & Partners</h3>
+            <div class="accred-links">
+                <a href="#">AICTE</a> <a href="#">NBA</a> <a href="#">NAAC</a> <a href="#">ISO</a>
+                <a href="#">UGC</a> <a href="#">VTU</a> <a href="#">NPTEL</a> <a href="#">Coursera</a>
+                <a href="#">Anti Ragging Committee</a> <a href="#">Grievance Redressal</a>
+            </div>
+        </div>
+        <div class="contact-col">
+            <h3>Dr. B. R. Patagundi</h3>
+            <p><strong>Principal</strong><br>S.G. Balekundri Institute of Technology<br>Karnataka, India</p>
+            <p>📧 <a href="mailto:principal@sgbit.edu.in">principal@sgbit.edu.in</a><br>📧 <a href="mailto:sgbitbelgaum@gmail.com">sgbitbelgaum@gmail.com</a></p>
+            <p>🌐 <a href="http://www.sgbit.edu.in" target="_blank">www.sgbit.edu.in</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CALL-TO-ACTION SECTION WITH BACKGROUND IMAGE ===== -->
+<div class="cta-section">
+    <h2>Ready to Shape Your Future?</h2>
+    <p>Apply now for the upcoming academic year. Limited seats available.</p>
+    <a href="#" class="cta-btn" target="_blank">Apply Online →</a>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="site-footer">
+    2K26 departments Event — Part of SG Balekundri Tech Community. All rights reserved.. ✨ Seamless event discovery
+</div>
+
+<!-- All external links open in new tab by default (target="_blank") -->
+</body>
+</html>

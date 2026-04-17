@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGBIT Events | Modern Event Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafc;
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eef2ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 12px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ========= NAVBAR ========= */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+      padding: 1rem 0;
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .logo h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #334155;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a:hover {
+      color: #8b5cf6;
+    }
+
+    /* ========= HERO WITH BACKGROUND IMAGE ========= */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, 
+        rgba(15, 23, 42, 0.75), 
+        rgba(76, 29, 149, 0.8)), 
+        url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600&auto=format');
+      background-size: cover;
+      background-position: center 30%;
+      background-attachment: fixed;
+      padding: 5rem 0;
+      border-radius: 0 0 3rem 3rem;
+      margin-bottom: 2rem;
+    }
+    
+    /* Optional: Overlay pattern for texture */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://www.transparenttextures.com/patterns/diagmonds-light.png');
+      opacity: 0.1;
+      pointer-events: none;
+      border-radius: 0 0 3rem 3rem;
+    }
+
+    .hero-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content {
+      flex: 1.2;
+    }
+    .hero-badge {
+      background: rgba(139, 92, 246, 0.9);
+      backdrop-filter: blur(5px);
+      color: white;
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: white !important;
+    }
+    .hero-content p {
+      font-size: 1.1rem;
+      color: #e2e8f0 !important;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .stat-item h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+    }
+    .stat-item p {
+      font-size: 0.85rem;
+      color: #cbd5e1 !important;
+      margin: 0;
+    }
+    .hero-illustration {
+      flex: 0.9;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 2rem 1rem;
+      border-radius: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .hero-illustration i {
+      font-size: 5rem;
+      color: white;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,0.2));
+      margin: 0 8px;
+    }
+    .hero-illustration p {
+      margin-top: 1rem;
+      font-weight: 500;
+      color: white;
+    }
+
+    /* Events Section */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin: 2.5rem 0 1.5rem;
+    }
+    .section-header h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+    }
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    .event-card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: 0.25s;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid #f0eefb;
+    }
+    .event-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(139, 92, 246, 0.2);
+    }
+    .event-img-placeholder {
+      height: 140px;
+      background: linear-gradient(115deg, #f3e8ff, #e9e4ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      color: #7c3aed;
+    }
+    .event-info {
+      padding: 1.2rem;
+    }
+    .event-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .event-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    .progress-bar-bg {
+      background: #e2e8f0;
+      border-radius: 40px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: #8b5cf6;
+      width: 0%;
+      height: 100%;
+      border-radius: 40px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      margin-top: 3rem;
+      padding: 2.5rem 0 1.5rem;
+      border-radius: 2rem 2rem 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-col h4 {
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+    .footer-col a:hover {
+      color: #a78bfa;
+    }
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+    }
+    .social-icons a {
+      background: #1e293b;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid #1e293b;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 780px) {
+      .container { padding: 0 20px; }
+      .nav-flex { flex-direction: column; gap: 1rem; }
+      .hero-content h1 { font-size: 2rem; }
+      .hero-grid { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-flex">
+      <div class="logo">
+        <h2>SGBIT<span style="font-size:0.9rem;">Events</span></h2>
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html"><i class="fas fa-landmark"></i> About college</a>
+        <a href="branch-events.html"><i class="fas fa-calendar-alt"></i> Branch Events</a>
+        <a href="booking.html"><i class="fas fa-ticket-alt"></i> Book Events</a>
+        <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+        <a href="create-event.html"><i class="fas fa-pen-ruler"></i> Create Event</a>
+        <a href="feedback.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero with Background Image -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fas fa-sparkle"></i> Smart Event Hub 2.0</div>
+        <h1>Where moments meet seamless management</h1>
+        <p>Discover, organize, and attend breathtaking events around your campus and city.</p>
+        <div class="hero-stats">
+          <div class="stat-item"><h3>Departments</h3><p>Live events</p></div>
+          <div class="stat-item"><h3>2.8k</h3><p>Active attendees</p></div>
+          <div class="stat-item"><h3>98%</h3><p>satisfaction</p></div>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        <i class="fas fa-calendar-check"></i>
+        <i class="fas fa-music"></i>
+        <i class="fas fa-chalkboard-user"></i>
+        <p>✨ curated experiences</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section-header">
+    <div>
+      <h2><i class="fas fa-fire-flame" style="color: #f97316;"></i> Upcoming Highlights</h2>
+      <p>Don't miss out — secure your spot now</p>
+    </div>
+    <a href="booking.html" style="color:#8b5cf6; font-weight:600;">Book Events <i class="fas fa-arrow-right"></i></a>
+  </div>
+
+  <div class="events-grid" id="eventsContainer">
+    <!-- Events will be injected via JS -->
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About SGBIT</h4>
+        <ul style="list-style:none;">
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="#">Why Choose Us</a></li>
+          <li><a href="#">Team</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <ul style="list-style:none;">
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Let Us Help You</h4>
+        <ul style="list-style:none;">
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Event Booking Guide</a></li>
+          <li><a href="#">Contact Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Join the community</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>© 2K26 departments Event — Part of SG Balekundri Tech Community. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const eventsData = [
+    { title: "Tech Conference 2025", type: "Conference", venue: "Convention Center", date: "2025-06-15", attendees: 120, capacity: 500 },
+    { title: "Neon Music Festival", type: "Music", venue: "City Park", date: "2025-07-20", attendees: 450, capacity: 1200 },
+    { title: "AI Workshop Summit", type: "Workshop", venue: "Innovation Hub", date: "2025-05-10", attendees: 55, capacity: 80 },
+    { title: "Leadership Seminar", type: "Seminar", venue: "Grand Plaza", date: "2025-08-05", attendees: 90, capacity: 200 }
+  ];
+
+  function renderEvents() {
+    const container = document.getElementById('eventsContainer');
+    container.innerHTML = eventsData.map(event => {
+      const percent = Math.min(100, Math.round((event.attendees / event.capacity) * 100));
+      return `
+        <div class="event-card">
+          <div class="event-img-placeholder"><i class="fas fa-calendar-alt"></i></div>
+          <div class="event-info">
+            <div class="event-title">${event.title}</div>
+            <div class="event-meta">
+              <span><i class="fas fa-tag"></i> ${event.type}</span>
+              <span><i class="fas fa-location-dot"></i> ${event.venue}</span>
+              <span><i class="fas fa-calendar-day"></i> ${new Date(event.date).toLocaleDateString()}</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-fill" style="width: ${percent}%;"></div>
+            </div>
+            <div style="font-size:0.75rem; margin-top:6px;">👥 ${event.attendees}/${event.capacity} attendees</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+  renderEvents();
+</script>
+</body>
+</html>

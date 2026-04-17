@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - SG Balekundri Institute of Technology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #FDF8F0;
+            color: #2C3E50;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background-color: #0A2F44;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 0;
+            color: white;
+        }
+
+        .logo-area span {
+            color: #E67E22;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            padding: 18px 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            background-color: #E67E22;
+            border-radius: 4px;
+        }
+
+        /* Events header */
+        .events-header {
+            background: linear-gradient(135deg, #0A2F44, #1E2A38);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+        }
+
+        .events-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .events-header p {
+            font-size: 1.1rem;
+        }
+
+        .click-hint {
+            background-color: #E67E22;
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+
+        /* Branch section */
+        .branch-section {
+            max-width: 1400px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .branch-title {
+            font-size: 2rem;
+            color: #0A2F44;
+            border-left: 6px solid #E67E22;
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid #E2E8F0;
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: #E67E22;
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        .event-content {
+            padding: 20px;
+        }
+
+        .event-category {
+            display: inline-block;
+            background-color: #E67E22;
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            color: #0A2F44;
+            margin-bottom: 10px;
+        }
+
+        .event-desc {
+            color: #2C3E50;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #6c757d;
+            border-top: 1px solid #E2E8F0;
+            padding-top: 12px;
+            margin-top: 10px;
+        }
+
+        .site-footer {
+            background-color: #0A2F44;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top: 4px solid #E67E22;
+        }
+
+        @media (max-width: 768px) {
+            .events-header h1 { font-size: 1.8rem; }
+            .branch-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-nav">
+    <div class="nav-container">
+        <div class="logo-area">
+            🎓 <span>SG Balekundri</span> Institute of Technology
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Programmes</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="events-header">
+    <h1>📅 Campus Events 2025</h1>
+    <p>Innovation • Education • Tech • Cultural • Arts • Business • Commerce</p>
+    <div class="click-hint">🔗 Click on any event card to open details in a new tab ➡️</div>
+</div>
+
+<div id="eventsRoot"></div>
+
+<footer class="site-footer">
+    2K26 departments Event — Part of SG Balekundri Tech Community. All rights reserved.. ✨ Seamless event discovery<br>
+    CSE | CSBS | ECE | Mechanical | AIDS | EEE
+</footer>
+
+<script>
+    // ==================== EVENT DATA (branch-wise) ====================
+    const eventsDatabase = {
+        "CSE": [
+            {
+                title: "CodeFusion 2025",
+                category: "Technical & Innovation",
+                description: "24-hour hackathon on AI/ML solutions for real-world problems.",
+                date: "April 15-16, 2025",
+                venue: "CSE Seminar Hall",
+                image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600",
+                fullDetails: "National-level hackathon. Prizes worth ₹1 lakh. Teams of 4."
+            },
+            {
+                title: "Cultural Razzmatazz",
+                category: "Cultural & Arts",
+                description: "Dance, music, drama, and fashion show. Inter-branch competition.",
+                date: "May 5, 2025",
+                venue: "Open Air Theatre",
+                image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600",
+                fullDetails: "Solo and group events. Cash prizes for winners."
+            },
+            {
+                title: "Tech+ Cultural Fusion",
+                category: "Tech + Cultural",
+                description: "Combine coding with creativity – design a tech-based cultural installation.",
+                date: "April 28, 2025",
+                venue: "CSE Lab 3",
+                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c2b0c?w=600",
+                fullDetails: "Technology meets art. Use Arduino, LEDs, and music."
+            }
+        ],
+        "CSBS": [
+            {
+                title: "Business Conclave",
+                category: "Business & Commerce",
+                description: "Panel discussion on 'Future of AI in Business' with industry leaders.",
+                date: "May 10, 2025",
+                venue: "MBA Auditorium",
+                image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600",
+                fullDetails: "Networking lunch included. Open to all."
+            },
+            {
+                title: "Cultural Night: Melange",
+                category: "Cultural",
+                description: "Folk dances, skits, and live band performance.",
+                date: "May 12, 2025",
+                venue: "Main Ground",
+                image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600",
+                fullDetails: "Theme: Unity in Diversity. Free entry."
+            }
+        ],
+        "ECE": [
+            {
+                title: "RoboRush",
+                category: "Innovation & Tech",
+                description: "Line-following and maze-solving robot competition.",
+                date: "April 20, 2025",
+                venue: "ECE Workshop",
+                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600",
+                fullDetails: "Build your own robot. Components at subsidized rates."
+            },
+            {
+                title: "VLSI Design Challenge",
+                category: "Technical",
+                description: "Hands-on workshop on chip design using open-source tools.",
+                date: "May 18, 2025",
+                venue: "VLSI Lab",
+                image: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600",
+                fullDetails: "Learn from industry experts. Certificate provided."
+            },
+            {
+                title: "Cultural: Electro Beats",
+                category: "Cultural + Tech",
+                description: "DJ night and light show organized by ECE students.",
+                date: "May 25, 2025",
+                venue: "College Lawn",
+                image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600",
+                fullDetails: "Synchronized LED lighting. Bring your ID."
+            }
+        ],
+        "Mechanical": [
+            {
+                title: "Design & Fabrication Expo",
+                category: "Innovation & Tech",
+                description: "Showcase CAD models, 3D printed parts, and working prototypes.",
+                date: "April 22, 2025",
+                venue: "Mechanical Workshop",
+                image: "https://images.unsplash.com/photo-1581092335871-4c3b3a4d4c4b?w=600",
+                fullDetails: "Best project gets internship opportunity."
+            },
+            {
+                title: "Cultural: Mechanics’ Mela",
+                category: "Cultural & Arts",
+                description: "Traditional games, food stalls, and mechanical-themed art competition.",
+                date: "May 15, 2025",
+                venue: "Mechanical Courtyard",
+                image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600",
+                fullDetails: "Fun events for all branches. Special prizes."
+            }
+        ],
+        "AIDS": [
+            {
+                title: "AI Summit 2025",
+                category: "Technical & Innovation",
+                description: "Workshops on Generative AI, LLMs, and AI ethics.",
+                date: "April 30, 2025",
+                venue: "AIDS Seminar Hall",
+                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
+                fullDetails: "Keynote by NVIDIA expert. Hands-on session."
+            },
+            {
+                title: "Data Science Hackathon",
+                category: "Technical",
+                description: "Solve real datasets from healthcare and finance.",
+                date: "May 20, 2025",
+                venue: "Data Analytics Lab",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600",
+                fullDetails: "Top 3 teams win cash prizes and internships."
+            },
+            {
+                title: "Cultural: AI Art Fest",
+                category: "Tech + Cultural",
+                description: "Create art using generative AI tools like DALL-E.",
+                date: "June 2, 2025",
+                venue: "AIDS Common Room",
+                image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600",
+                fullDetails: "No prior art skills needed. Laptops provided."
+            }
+        ],
+        "EEE": [
+            {
+                title: "Power Grid Challenge",
+                category: "Innovation & Tech",
+                description: "Design a mini solar-powered grid for rural areas.",
+                date: "May 8, 2025",
+                venue: "Electrical Lab",
+                image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=600",
+                fullDetails: "Team event. Simulation + hardware prototype."
+            },
+            {
+                title: "Cultural: Sparks & Sounds",
+                category: "Cultural",
+                description: "Battle of bands, electric violin, and fusion music.",
+                date: "May 22, 2025",
+                venue: "Amphitheatre",
+                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600",
+                fullDetails: "Open to all branches. Register by May 15."
+            }
+        ]
+    };
+
+    // Function to open event details in a new tab
+    function openEventDetails(ev) {
+        const newTab = window.open();
+        newTab.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head><meta charset="UTF-8"><title>${ev.title} - SG Balekundri</title>
+            <style>
+                body { font-family: 'Segoe UI', Arial, sans-serif; background: #FDF8F0; margin: 0; padding: 20px; }
+                .container { max-width: 800px; margin: 40px auto; background: white; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); }
+                img { width: 100%; height: 300px; object-fit: cover; }
+                .content { padding: 30px; }
+                h1 { color: #0A2F44; }
+                .category { display: inline-block; background: #E67E22; color: white; padding: 5px 15px; border-radius: 30px; font-size: 0.8rem; margin-bottom: 20px; }
+                .meta { color: #6c757d; margin: 15px 0; display: flex; gap: 20px; }
+                button { background: #0A2F44; color: white; padding: 12px 24px; border: none; border-radius: 40px; cursor: pointer; margin-top: 20px; }
+                button:hover { background: #E67E22; }
+            </style>
+            </head>
+            <body>
+            <div class="container">
+                <img src="${ev.image}" onerror="this.src='https://placehold.co/600x400?text=Event+Image'">
+                <div class="content">
+                    <span class="category">${ev.category}</span>
+                    <h1>${ev.title}</h1>
+                    <div class="meta"><span>📅 ${ev.date}</span><span>📍 ${ev.venue}</span></div>
+                    <p><strong>Full Details:</strong> ${ev.fullDetails || ev.description}</p>
+                    <p><strong>Description:</strong> ${ev.description}</p>
+                    <button onclick="window.close()">Close Window</button>
+                </div>
+            </div>
+            </body>
+            </html>
+        `);
+        newTab.document.close();
+    }
+
+    // Render the events
+    const root = document.getElementById('eventsRoot');
+    root.innerHTML = '';
+
+    for (const [branch, events] of Object.entries(eventsDatabase)) {
+        const section = document.createElement('div');
+        section.className = 'branch-section';
+        
+        const title = document.createElement('h2');
+        title.className = 'branch-title';
+        title.textContent = `${branch} Department Events`;
+        section.appendChild(title);
+        
+        const grid = document.createElement('div');
+        grid.className = 'events-grid';
+        
+        events.forEach(ev => {
+            const card = document.createElement('div');
+            card.className = 'event-card';
+            card.onclick = () => openEventDetails(ev);
+            
+            const img = document.createElement('img');
+            img.src = ev.image;
+            img.alt = ev.title;
+            img.className = 'event-image';
+            img.onerror = () => { img.src = 'https://placehold.co/600x400?text=Event+Image'; };
+            
+            const content = document.createElement('div');
+            content.className = 'event-content';
+            content.innerHTML = `
+                <div class="event-category">${ev.category}</div>
+                <h3 class="event-title">${ev.title}</h3>
+                <p class="event-desc">${ev.description.length > 120 ? ev.description.substring(0,120)+'...' : ev.description}</p>
+                <div class="event-meta"><span>📅 ${ev.date}</span><span>📍 ${ev.venue}</span></div>
+            `;
+            
+            card.appendChild(img);
+            card.appendChild(content);
+            grid.appendChild(card);
+        });
+        
+        section.appendChild(grid);
+        root.appendChild(section);
+    }
+
+    // If still no events (fallback safety)
+    if (root.children.length === 0) {
+        root.innerHTML = '<div style="text-align:center; padding:50px;">No events found. Please check data.</div>';
+    }
+</script>
+</body>
+</html>

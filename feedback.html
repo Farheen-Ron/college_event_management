@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Feedback Hub • SGBIT Events</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafc;
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eef2ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 12px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ========= NAVBAR (consistent with all pages) ========= */
+    .navbar {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+    }
+    .logo h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .logo span {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #334155;
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a i {
+      font-size: 0.9rem;
+    }
+    .nav-links a:hover {
+      color: #8b5cf6;
+      transform: translateY(-1px);
+    }
+    .nav-links a.active {
+      color: #8b5cf6;
+      font-weight: 600;
+      border-bottom: 2px solid #8b5cf6;
+      padding-bottom: 4px;
+    }
+
+    /* ========= FEEDBACK HERO ========= */
+    .feedback-hero {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
+      padding: 2rem 0 2rem;
+      text-align: center;
+    }
+    .hero-badge {
+      background: #ede9fe;
+      display: inline-block;
+      padding: 0.25rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6d28d9;
+      margin-bottom: 1rem;
+    }
+    .feedback-hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e293b, #4c1d95);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .feedback-hero p {
+      color: #5b6e8c;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    /* ========= TWO COLUMN LAYOUT ========= */
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 2rem;
+      margin: 2.5rem 0 3rem;
+    }
+    @media (max-width: 880px) {
+      .feedback-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    /* LEFT CARD: Submit Review */
+    .form-card {
+      background: white;
+      border-radius: 1.8rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+      padding: 1.8rem;
+      border: 1px solid #f0eefb;
+      transition: transform 0.2s;
+    }
+    .form-card:hover {
+      transform: translateY(-3px);
+    }
+    .form-card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-card h2 i {
+      color: #8b5cf6;
+    }
+    .subhead {
+      color: #64748b;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid #8b5cf6;
+      padding-left: 10px;
+    }
+    .input-group {
+      margin-bottom: 1.3rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .input-group label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .input-group label i {
+      color: #8b5cf6;
+    }
+    select, textarea {
+      padding: 0.85rem 1rem;
+      border-radius: 1rem;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      background: #fefefe;
+    }
+    select:focus, textarea:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    /* star rating widget */
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .star-rating input {
+      display: none;
+    }
+    .star-rating label {
+      font-size: 1.8rem;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: #fbbf24;
+    }
+    .rating-value {
+      margin-left: 10px;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    .btn-submit {
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 0.5rem;
+      box-shadow: 0 6px 12px -6px rgba(139, 92, 246, 0.4);
+    }
+    .btn-submit:hover {
+      background: #7c3aed;
+      transform: translateY(-2px);
+    }
+
+    /* RIGHT SECTION: Recent Reviews */
+    .reviews-card {
+      background: white;
+      border-radius: 1.8rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+      padding: 1.8rem;
+      border: 1px solid #f0eefb;
+    }
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .reviews-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-stats {
+      background: #f1f5f9;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-height: 550px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .review-item {
+      background: #fefefe;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      border: 1px solid #edf2f7;
+      transition: all 0.2s;
+    }
+    .review-item:hover {
+      border-color: #e2d5ff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .event-title {
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .rating-stars i {
+      color: #fbbf24;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+    .review-comment {
+      font-size: 0.9rem;
+      color: #334155;
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+    .review-meta {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: #94a3b8;
+    }
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      margin-top: 2rem;
+      padding: 2.5rem 0 1.5rem;
+      border-radius: 2rem 2rem 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-col h4 {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      color: #94a3b8;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .footer-col a:hover {
+      color: #a78bfa;
+    }
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .social-icons a {
+      background: #1e293b;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid #1e293b;
+      font-size: 0.75rem;
+    }
+    @media (max-width: 680px) {
+      .container {
+        padding: 0 20px;
+      }
+      .nav-flex {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-flex">
+      <div class="logo">
+        <h2>SGBIT<span>Events</span></h2>
+        <div style="font-size: 0.7rem;">✨ experience elevated</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html"><i class="fas fa-landmark"></i> About college</a>
+        <a href="branch-events.html"><i class="fas fa-calendar-alt"></i> Branch Events</a>
+        <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+        <a href="create-event.html"><i class="fas fa-pen-ruler"></i> Create Event</a>
+        <a href="feedback.html" class="active"><i class="fas fa-comment-dots"></i> Feedback</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="feedback-hero">
+  <div class="container">
+    <div class="hero-badge"><i class="fas fa-microphone-alt"></i> Voice of the community</div>
+    <h1>Event Feedback Hub</h1>
+    <p>Share your experience & help others choose the best events ✨</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="feedback-grid">
+    <!-- LEFT: Feedback form -->
+    <div class="form-card">
+      <h2><i class="fas fa-pen-fancy"></i> Write a Review</h2>
+      <div class="subhead">Your honest feedback makes our community stronger</div>
+      <form id="feedbackForm">
+        <div class="input-group">
+          <label><i class="fas fa-calendar-alt"></i> Select Event *</label>
+          <select id="eventSelect" required>
+            <option value="" disabled selected>— Choose an event —</option>
+            <option value="Tech Conference 2025">Tech Conference 2025</option>
+            <option value="Neon Music Festival">Neon Music Festival</option>
+            <option value="AI Workshop Summit">AI Workshop Summit</option>
+            <option value="Leadership Seminar">Leadership Seminar</option>
+            <option value="Design & Code Sprint">Design & Code Sprint</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fas fa-star"></i> Your Rating *</label>
+          <div class="star-rating" id="starRatingWidget">
+            <input type="radio" id="star5" name="rating" value="5"><label for="star5" title="5 stars">★</label>
+            <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars">★</label>
+            <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars">★</label>
+            <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars">★</label>
+            <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 star">★</label>
+            <span class="rating-value" id="ratingValueDisplay">Tap a star</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fas fa-comment"></i> Your Comment</label>
+          <textarea id="commentInput" rows="3" placeholder="Tell us what you liked or suggestions for improvement... (optional)"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
+      </form>
+    </div>
+
+    <!-- RIGHT: Reviews feed with dynamic data -->
+    <div class="reviews-card">
+      <div class="reviews-header">
+        <h2><i class="fas fa-users-viewfinder"></i> Recent Attendee Reviews</h2>
+        <div class="review-stats" id="reviewCountBadge">3 reviews</div>
+      </div>
+      <div class="reviews-list" id="reviewsList">
+        <!-- dynamic reviews will appear here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>About SG Balekundri</h4><ul><li><a href="#">Our Story</a></li><li><a href="#">Why Choose Us</a></li><li><a href="#">Team</a></li></ul></div>
+      <div class="footer-col"><h4>Connect With Us</h4><ul><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li><li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li></ul></div>
+      <div class="footer-col"><h4>Let Us Help You</h4><ul><li><a href="#">FAQs</a></li><li><a href="#">Event Booking Guide</a></li><li><a href="#">Contact Support</a></li></ul></div>
+      <div class="footer-col"><h4>Join the community</h4><div class="social-icons"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a></div></div>
+    </div>
+    <div class="copyright"><p>© 2K26 SGBIT Events — Empowering authentic feedback. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<script>
+  // ---------- INITIAL REVIEWS (from provided content + extra) ----------
+  let reviews = [
+    {
+      id: 1,
+      event: "AI Workshop Summit",
+      rating: 5,
+      comment: "No comment provided.",
+      date: "2025-04-10"
+    },
+    {
+      id: 2,
+      event: "Tech Conference 2025",
+      rating: 5,
+      comment: "Absolutely amazing! Keynotes were inspiring.",
+      date: "2025-04-10"
+    },
+    {
+      id: 3,
+      event: "Neon Music Festival",
+      rating: 4,
+      comment: "Great vibes but sound could improve.",
+      date: "2025-04-09"
+    }
+  ];
+
+  // Helper: format date to readable (DD/MM/YYYY)
+  function formatDate(dateStr) {
+    if (!dateStr) return "Recent";
+    const parts = dateStr.split('-');
+    if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    return dateStr;
+  }
+
+  // Render stars based on rating (filled stars)
+  function renderStars(rating) {
+    let starsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) starsHtml += '<i class="fas fa-star"></i>';
+      else starsHtml += '<i class="far fa-star"></i>';
+    }
+    return starsHtml;
+  }
+
+  // Render all reviews into the right panel
+  function renderReviews() {
+    const container = document.getElementById('reviewsList');
+    const badge = document.getElementById('reviewCountBadge');
+    if (!container) return;
+    
+    if (reviews.length === 0) {
+      container.innerHTML = `<div class="empty-state"><i class="fas fa-comment-dots"></i> No reviews yet. Be the first to share!</div>`;
+      if (badge) badge.innerText = `0 reviews`;
+      return;
+    }
+    
+    if (badge) badge.innerText = `${reviews.length} review${reviews.length !== 1 ? 's' : ''}`;
+    
+    // sort by date descending (newest first)
+    const sorted = [...reviews].sort((a,b) => new Date(b.date) - new Date(a.date));
+    container.innerHTML = sorted.map(rev => `
+      <div class="review-item">
+        <div class="review-top">
+          <span class="event-title"><i class="fas fa-ticket-alt"></i> ${escapeHtml(rev.event)}</span>
+          <div class="rating-stars">${renderStars(rev.rating)}</div>
+        </div>
+        <div class="review-comment">${escapeHtml(rev.comment) || "No comment provided."}</div>
+        <div class="review-meta">
+          <span><i class="far fa-calendar-alt"></i> ${formatDate(rev.date)}</span>
+          <span><i class="fas fa-star" style="color:#fbbf24;"></i> ${rev.rating}/5</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // star rating widget UI feedback
+  const starsRadios = document.querySelectorAll('input[name="rating"]');
+  const ratingDisplaySpan = document.getElementById('ratingValueDisplay');
+  function updateRatingText() {
+    let selectedVal = null;
+    for (let radio of starsRadios) {
+      if (radio.checked) {
+        selectedVal = radio.value;
+        break;
+      }
+    }
+    if (selectedVal) {
+      ratingDisplaySpan.innerText = `⭐ ${selectedVal}/5 stars`;
+    } else {
+      ratingDisplaySpan.innerText = `Tap a star`;
+    }
+  }
+  starsRadios.forEach(radio => radio.addEventListener('change', updateRatingText));
+
+  // Handle form submission
+  const feedbackForm = document.getElementById('feedbackForm');
+  feedbackForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const eventVal = document.getElementById('eventSelect').value;
+    let ratingVal = null;
+    for (let radio of starsRadios) {
+      if (radio.checked) {
+        ratingVal = parseInt(radio.value);
+        break;
+      }
+    }
+    const comment = document.getElementById('commentInput').value.trim();
+    
+    if (!eventVal) {
+      alert("✨ Please select an event to share your feedback.");
+      return;
+    }
+    if (!ratingVal) {
+      alert("⭐ Tap a star to rate your experience.");
+      return;
+    }
+    
+    // Create new review object
+    const newReview = {
+      id: Date.now(),
+      event: eventVal,
+      rating: ratingVal,
+      comment: comment === "" ? "No comment provided." : comment,
+      date: new Date().toISOString().slice(0,10)
+    };
+    
+    reviews.unshift(newReview);  // add to top (most recent)
+    renderReviews();
+    
+    // Reset form fields
+    document.getElementById('eventSelect').value = "";
+    for (let radio of starsRadios) radio.checked = false;
+    document.getElementById('commentInput').value = "";
+    updateRatingText();
+    
+    // Show subtle success feedback
+    alert(`✅ Thanks for your feedback on "${eventVal}"!\nYour review helps the community.`);
+  });
+  
+  // initial render
+  renderReviews();
+</script>
+</body>
+</html>

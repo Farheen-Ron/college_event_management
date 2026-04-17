@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Event Booking • Nexus Events | Department-wise Reservations</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafc;
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eef2ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 12px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ========= NAVBAR ========= */
+    .navbar {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+    }
+    .logo h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #334155;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #8b5cf6;
+    }
+
+    /* Hero */
+    .booking-hero {
+      background: linear-gradient(125deg, #ffffff, #f5f3ff);
+      padding: 2rem 0;
+      text-align: center;
+    }
+    .booking-hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e293b, #4c1d95);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Department Tabs */
+    .dept-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 2rem 0 1.5rem;
+    }
+    .dept-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 0.6rem 1.3rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .dept-btn i {
+      margin-right: 6px;
+    }
+    .dept-btn.active, .dept-btn:hover {
+      background: #8b5cf6;
+      color: white;
+      border-color: #8b5cf6;
+    }
+
+    /* Events Grid */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0 3rem;
+    }
+    .event-card {
+      background: white;
+      border-radius: 1.6rem;
+      overflow: hidden;
+      box-shadow: 0 12px 25px -12px rgba(0,0,0,0.08);
+      transition: all 0.25s;
+      border: 1px solid #f0eefb;
+    }
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -12px rgba(139, 92, 246, 0.2);
+    }
+    .event-img {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .event-dept {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+    }
+    .event-info {
+      padding: 1.2rem;
+    }
+    .event-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: #5b6e8c;
+      margin: 10px 0;
+    }
+    .event-meta i {
+      width: 18px;
+      color: #8b5cf6;
+    }
+    .capacity {
+      font-size: 0.75rem;
+      background: #f1f5f9;
+      padding: 4px 8px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .book-btn {
+      width: 100%;
+      margin-top: 1rem;
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .book-btn:hover {
+      background: #7c3aed;
+      transform: translateY(-2px);
+    }
+    .book-btn.disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+    }
+
+    /* My Bookings Sidebar / Section */
+    .bookings-section {
+      background: white;
+      border-radius: 1.6rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #f0eefb;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .booking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .booking-item {
+      background: #f8fafc;
+      border-radius: 1rem;
+      padding: 0.8rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .cancel-btn {
+      background: none;
+      border: 1px solid #e2e8f0;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .cancel-btn:hover {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+    .empty-msg {
+      color: #94a3b8;
+      text-align: center;
+      padding: 1rem;
+    }
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      margin-top: 2rem;
+      padding: 2rem 0 1rem;
+      border-radius: 2rem 2rem 0 0;
+    }
+    @media (max-width: 680px) {
+      .container { padding: 0 20px; }
+      .nav-flex { flex-direction: column; gap: 1rem; }
+      .dept-tabs { gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-flex">
+      <div class="logo"><h2>Nexus<span style="font-size:0.9rem;">Events</span></h2></div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html"><i class="fas fa-landmark"></i> About</a>
+        <a href="branch-events.html"><i class="fas fa-calendar-alt"></i> Branch Events</a>
+        <a href="booking.html" class="active"><i class="fas fa-ticket-alt"></i> Bookings</a>
+        <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="booking-hero">
+  <div class="container">
+    <h1><i class="fas fa-calendar-check"></i> Department-wise Event Booking</h1>
+    <p>Select your branch, explore events, and reserve your seat instantly.</p>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Department Tabs -->
+  <div class="dept-tabs" id="deptTabs"></div>
+
+  <!-- Events Grid -->
+  <div id="eventsContainer" class="events-grid"></div>
+
+  <!-- My Bookings Section -->
+  <div class="bookings-section">
+    <div class="section-header">
+      <h3><i class="fas fa-bookmark"></i> My Bookings</h3>
+      <span id="bookingCount" style="background:#ede9fe; padding:4px 12px; border-radius:30px;">0 events</span>
+    </div>
+    <div id="myBookingsList" class="booking-list">
+      <div class="empty-msg">No bookings yet. Book an event above ✨</div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="copyright" style="text-align:center;">2K26 departments Event — Part of SG Balekundri Tech Community. All rights reserved.. ✨ Seamless event discovery</div>
+  </div>
+</footer>
+
+<script>
+  // ---------- EVENT DATABASE (department-wise) ----------
+  const eventsData = [
+    // CSE
+    { id: "cse1", name: "Code Wars Hackathon", dept: "CSE", date: "2025-06-10", venue: "CSE Seminar Hall", capacity: 60, booked: 0, img: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=500&auto=format" },
+    { id: "cse2", name: "AI/ML Workshop", dept: "CSE", date: "2025-06-20", venue: "AI Lab", capacity: 45, booked: 0, img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&auto=format" },
+    { id: "cse3", name: "Cyber Security Summit", dept: "CSE", date: "2025-07-05", venue: "Auditorium", capacity: 80, booked: 0, img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=500&auto=format" },
+    // CSBS
+    { id: "csbs1", name: "Business Analytics Meet", dept: "CSBS", date: "2025-06-12", venue: "MBA Block", capacity: 50, booked: 0, img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&auto=format" },
+    { id: "csbs2", name: "Fintech Conclave", dept: "CSBS", date: "2025-07-18", venue: "Central Hall", capacity: 40, booked: 0, img: "https://images.unsplash.com/photo-1579621970588-a35d0e7ab9b6?w=500&auto=format" },
+    // EC
+    { id: "ec1", name: "Embedded Systems Workshop", dept: "EC", date: "2025-06-15", venue: "Electronics Lab", capacity: 35, booked: 0, img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=500&auto=format" },
+    { id: "ec2", name: "IoT Innovation Fest", dept: "EC", date: "2025-07-22", venue: "IoT Center", capacity: 55, booked: 0, img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format" },
+    // EEE
+    { id: "eee1", name: "Smart Grid Seminar", dept: "EEE", date: "2025-06-25", venue: "Power Systems Lab", capacity: 40, booked: 0, img: "https://images.unsplash.com/photo-1562408590-e32931084e23?w=500&auto=format" },
+    { id: "eee2", name: "Renewable Energy Expo", dept: "EEE", date: "2025-08-01", venue: "Open Air Theatre", capacity: 100, booked: 0, img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=500&auto=format" },
+    // AIDS
+    { id: "aids1", name: "Generative AI Hackathon", dept: "AIDS", date: "2025-07-10", venue: "Data Science Hub", capacity: 50, booked: 0, img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&auto=format" },
+    { id: "aids2", name: "ML Marathon", dept: "AIDS", date: "2025-08-15", venue: "Computer Center", capacity: 65, booked: 0, img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500&auto=format" },
+    // BCA
+    { id: "bca1", name: "Web Dev Challenge", dept: "BCA", date: "2025-06-18", venue: "BCA Lab", capacity: 45, booked: 0, img: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=500&auto=format" },
+    { id: "bca2", name: "Digital Marketing Fest", dept: "BCA", date: "2025-07-25", venue: "Seminar Complex", capacity: 60, booked: 0, img: "https://images.unsplash.com/photo-1432888622747-4eb9a8f2c293?w=500&auto=format" },
+    // MCA
+    { id: "mca1", name: "Cloud & DevOps Summit", dept: "MCA", date: "2025-07-01", venue: "Cloud Lab", capacity: 55, booked: 0, img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&auto=format" },
+    { id: "mca2", name: "Open Source Sprint", dept: "MCA", date: "2025-08-10", venue: "MCA Block", capacity: 40, booked: 0, img: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=500&auto=format" },
+    // MECHANICAL
+    { id: "mech1", name: "AutoCAD Design Fest", dept: "MECHANICAL", date: "2025-06-28", venue: "CAD Center", capacity: 50, booked: 0, img: "https://images.unsplash.com/photo-1581092335871-5c5d5f3f7b1a?w=500&auto=format" },
+    { id: "mech2", name: "Robotics & Automation Expo", dept: "MECHANICAL", date: "2025-07-30", venue: "Mech Workshop", capacity: 70, booked: 0, img: "https://images.unsplash.com/photo-1562408590-e32931084e23?w=500&auto=format" },
+    // CIVIL
+    { id: "civil1", name: "Sustainable Construction Workshop", dept: "CIVIL", date: "2025-07-12", venue: "Civil Engg Block", capacity: 45, booked: 0, img: "https://images.unsplash.com/photo-1571624436279-b272aff752b5?w=500&auto=format" },
+    { id: "civil2", name: "Structural Design Challenge", dept: "CIVIL", date: "2025-08-20", venue: "Material Testing Lab", capacity: 35, booked: 0, img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=500&auto=format" }
+  ];
+
+  // Initialize bookings from localStorage
+  let myBookings = JSON.parse(localStorage.getItem('eventBookings')) || [];
+  // update booked counts in eventsData based on bookings
+  function syncBookedCounts() {
+    eventsData.forEach(ev => { ev.booked = 0; });
+    myBookings.forEach(booking => {
+      const ev = eventsData.find(e => e.id === booking.eventId);
+      if (ev) ev.booked = (ev.booked || 0) + 1;
+    });
+  }
+  syncBookedCounts();
+
+  // Department list (all unique)
+  const departments = ["CSE", "CSBS", "EC", "EEE", "AIDS", "BCA", "MCA", "MECHANICAL", "CIVIL"];
+  let currentDept = "CSE";
+
+  // Render department tabs
+  function renderTabs() {
+    const tabsContainer = document.getElementById('deptTabs');
+    tabsContainer.innerHTML = departments.map(dept => `
+      <button class="dept-btn ${currentDept === dept ? 'active' : ''}" data-dept="${dept}">
+        <i class="fas ${getIconForDept(dept)}"></i> ${dept}
+      </button>
+    `).join('');
+    // attach events
+    document.querySelectorAll('.dept-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        currentDept = btn.getAttribute('data-dept');
+        renderTabs();
+        renderEvents();
+      });
+    });
+  }
+
+  function getIconForDept(dept) {
+    const map = { CSE:'fa-code', CSBS:'fa-chart-line', EC:'fa-microchip', EEE:'fa-bolt', AIDS:'fa-robot', BCA:'fa-database', MCA:'fa-network-wired', MECHANICAL:'fa-cogs', CIVIL:'fa-draw-polygon' };
+    return map[dept] || 'fa-calendar';
+  }
+
+  // Render events for current department
+  function renderEvents() {
+    const container = document.getElementById('eventsContainer');
+    const filtered = eventsData.filter(ev => ev.dept === currentDept);
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem;">✨ No events for ${currentDept} department yet. Check back soon!</div>`;
+      return;
+    }
+    container.innerHTML = filtered.map(ev => {
+      const available = ev.capacity - ev.booked;
+      const isFull = available <= 0;
+      return `
+        <div class="event-card">
+          <div class="event-img" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('${ev.img}');">
+            <div class="event-dept"><i class="fas ${getIconForDept(ev.dept)}"></i> ${ev.dept}</div>
+          </div>
+          <div class="event-info">
+            <div class="event-title">${ev.name}</div>
+            <div class="event-meta">
+              <span><i class="fas fa-calendar-day"></i> ${new Date(ev.date).toLocaleDateString()}</span>
+              <span><i class="fas fa-location-dot"></i> ${ev.venue}</span>
+            </div>
+            <div><span class="capacity"><i class="fas fa-users"></i> ${ev.booked}/${ev.capacity} seats</span></div>
+            <button class="book-btn ${isFull ? 'disabled' : ''}" data-id="${ev.id}" ${isFull ? 'disabled' : ''}>
+              ${isFull ? 'Sold Out' : '🎟️ Book Now'}
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // attach booking events
+    document.querySelectorAll('.book-btn:not(.disabled)').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const eventId = btn.getAttribute('data-id');
+        bookEvent(eventId);
+      });
+    });
+  }
+
+  // Booking logic
+  function bookEvent(eventId) {
+    const event = eventsData.find(e => e.id === eventId);
+    if (!event) return;
+    const available = event.capacity - event.booked;
+    if (available <= 0) {
+      alert("❌ Sorry, this event is fully booked!");
+      renderEvents();
+      return;
+    }
+    // check duplicate booking for same event (optional)
+    const alreadyBooked = myBookings.some(b => b.eventId === eventId);
+    if (alreadyBooked) {
+      alert("⚠️ You have already booked this event.");
+      return;
+    }
+    // add booking
+    const newBooking = {
+      id: Date.now(),
+      eventId: event.id,
+      eventName: event.name,
+      dept: event.dept,
+      date: event.date,
+      venue: event.venue,
+      bookedAt: new Date().toISOString()
+    };
+    myBookings.push(newBooking);
+    localStorage.setItem('eventBookings', JSON.stringify(myBookings));
+    // update booked count
+    event.booked += 1;
+    syncBookedCounts();
+    renderEvents();
+    renderMyBookings();
+    alert(`✅ Booked successfully: ${event.name}\n📅 ${new Date(event.date).toLocaleDateString()} at ${event.venue}`);
+  }
+
+  // Render My Bookings
+  function renderMyBookings() {
+    const container = document.getElementById('myBookingsList');
+    const countSpan = document.getElementById('bookingCount');
+    countSpan.innerText = `${myBookings.length} event${myBookings.length !== 1 ? 's' : ''}`;
+    if (myBookings.length === 0) {
+      container.innerHTML = `<div class="empty-msg">📭 No bookings yet. Book an event above ✨</div>`;
+      return;
+    }
+    container.innerHTML = myBookings.map(book => `
+      <div class="booking-item">
+        <div>
+          <strong>${book.eventName}</strong><br>
+          <small><i class="fas fa-tag"></i> ${book.dept} • <i class="fas fa-calendar"></i> ${new Date(book.date).toLocaleDateString()} • ${book.venue}</small>
+        </div>
+        <button class="cancel-btn" data-bookingid="${book.id}"><i class="fas fa-times-circle"></i> Cancel</button>
+      </div>
+    `).join('');
+    // attach cancel events
+    document.querySelectorAll('.cancel-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const bookingId = parseInt(btn.getAttribute('data-bookingid'));
+        cancelBooking(bookingId);
+      });
+    });
+  }
+
+  function cancelBooking(bookingId) {
+    const bookingIndex = myBookings.findIndex(b => b.id === bookingId);
+    if (bookingIndex === -1) return;
+    const booking = myBookings[bookingIndex];
+    const event = eventsData.find(e => e.id === booking.eventId);
+    if (event) {
+      event.booked = Math.max(0, event.booked - 1);
+    }
+    myBookings.splice(bookingIndex, 1);
+    localStorage.setItem('eventBookings', JSON.stringify(myBookings));
+    syncBookedCounts();
+    renderEvents();
+    renderMyBookings();
+    alert(`❕ Cancelled booking: ${booking.eventName}`);
+  }
+
+  // initial load
+  renderTabs();
+  renderEvents();
+  renderMyBookings();
+</script>
+</body>
+</html>

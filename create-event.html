@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Create Event • SGBIT Events</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafc;
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #eef2ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 12px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ========= NAVBAR (consistent with all pages) ========= */
+    .navbar {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+    }
+    .logo h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .logo span {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #334155;
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a i {
+      font-size: 0.9rem;
+    }
+    .nav-links a:hover {
+      color: #8b5cf6;
+      transform: translateY(-1px);
+    }
+    .nav-links a.active {
+      color: #8b5cf6;
+      font-weight: 600;
+      border-bottom: 2px solid #8b5cf6;
+      padding-bottom: 4px;
+    }
+
+    /* ========= CREATE EVENT MAIN SECTION ========= */
+    .create-wrapper {
+      padding: 2.5rem 1rem 3rem;
+      background: linear-gradient(125deg, #ffffff 0%, #f5f3ff 100%);
+    }
+    .create-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .page-header .icon-badge {
+      background: #ede9fe;
+      width: 70px;
+      height: 70px;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .page-header .icon-badge i {
+      font-size: 2.4rem;
+      color: #7c3aed;
+    }
+    .page-header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e293b, #4c1d95);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .page-header p {
+      color: #5b6e8c;
+      font-size: 1rem;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.02);
+      padding: 2rem 2rem 2.5rem;
+      border: 1px solid #f0eefb;
+      transition: transform 0.2s ease;
+    }
+    .form-card:hover {
+      transform: translateY(-3px);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .full-width {
+      grid-column: span 2;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0.2rem;
+    }
+    .input-group label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .input-group label i {
+      color: #8b5cf6;
+      width: 20px;
+    }
+    .input-group input, 
+    .input-group select, 
+    .input-group textarea {
+      padding: 0.85rem 1rem;
+      border-radius: 1rem;
+      border: 1.5px solid #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      background: #fefefe;
+      width: 100%;
+    }
+    .input-group input:focus, 
+    .input-group select:focus, 
+    .input-group textarea:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+    .input-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .datetime-row {
+      display: flex;
+      gap: 1rem;
+    }
+    .datetime-row .input-group {
+      flex: 1;
+    }
+    .helper-text {
+      font-size: 0.7rem;
+      color: #64748b;
+      margin-top: 5px;
+    }
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #edf2f7;
+    }
+    .btn-primary {
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 2rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+    }
+    .btn-primary:hover {
+      background: #7c3aed;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid #cbd5e1;
+      color: #475569;
+      padding: 0.85rem 1.8rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: #8b5cf6;
+      color: #8b5cf6;
+      background: #f8fafc;
+    }
+    .event-preview {
+      background: #f8fafc;
+      border-radius: 1.2rem;
+      padding: 1rem 1.2rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid #8b5cf6;
+      font-size: 0.85rem;
+    }
+    .event-preview h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+    .event-preview p {
+      color: #475569;
+    }
+
+    /* ========= FOOTER (matching homepage) ========= */
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      margin-top: 2rem;
+      padding: 2.5rem 0 1.5rem;
+      border-radius: 2rem 2rem 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-col h4 {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      color: #94a3b8;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .footer-col a:hover {
+      color: #a78bfa;
+    }
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .social-icons a {
+      background: #1e293b;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid #1e293b;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        padding: 0 20px;
+      }
+      .nav-flex {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        justify-content: center;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      .datetime-row {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .form-actions {
+        flex-direction: column;
+      }
+      .form-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR: active "Create Event" highlighted -->
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-flex">
+      <div class="logo">
+        <h2>SGBIT<span>Events</span></h2>
+        <div style="font-size: 0.7rem; letter-spacing: 0.5px;">✨ experience elevated</div>
+      </div>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html"><i class="fas fa-landmark"></i> About college</a>
+        <a href="branch-events.html"><i class="fas fa-calendar-alt"></i> Branch Events</a>
+        <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+        <a href="create-event.html" class="active"><i class="fas fa-pen-ruler"></i> Create Event</a>
+        <a href="feedback.html"><i class="fas fa-comment-dots"></i> Feedback</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- CREATE EVENT FORM SECTION -->
+<div class="create-wrapper">
+  <div class="create-container">
+    <div class="page-header">
+      <div class="icon-badge">
+        <i class="fas fa-calendar-plus"></i>
+      </div>
+      <h1>Host an amazing event</h1>
+      <p>Fill the details below and let attendees discover your experience ✨</p>
+    </div>
+
+    <div class="form-card">
+      <form id="createEventForm" action="#" method="POST">
+        <div class="form-grid">
+          <!-- Event Name -->
+          <div class="input-group full-width">
+            <label><i class="fas fa-tag"></i> Event Name</label>
+            <input type="text" id="eventName" placeholder="e.g., Tech Conference 2025, Neon Music Fest" required>
+          </div>
+
+          <!-- Event Type + Venue side by side -->
+          <div class="input-group">
+            <label><i class="fas fa-layer-group"></i> Event Type</label>
+            <select id="eventType" required>
+              <option value="Conference">Conference</option>
+              <option value="Music">Music Festival</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Seminar">Seminar</option>
+              <option value="Hackathon">Hackathon</option>
+              <option value="Networking">Networking</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-location-dot"></i> Venue / Location</label>
+            <input type="text" id="venue" placeholder="e.g., Convention Center, City Park" required>
+          </div>
+
+          <!-- Description full width -->
+          <div class="input-group full-width">
+            <label><i class="fas fa-align-left"></i> Description</label>
+            <textarea id="description" placeholder="Tell attendees what makes this event special, agenda, highlights..."></textarea>
+            <div class="helper-text">Brief description that appears on event cards.</div>
+          </div>
+
+          <!-- Date & Time row -->
+          <div class="input-group">
+            <label><i class="fas fa-calendar-day"></i> Event Date</label>
+            <input type="date" id="eventDate" required>
+          </div>
+
+          <div class="input-group">
+            <label><i class="fas fa-clock"></i> Event Time</label>
+            <input type="time" id="eventTime" required>
+          </div>
+
+          <!-- Max Attendees -->
+          <div class="input-group">
+            <label><i class="fas fa-users"></i> Max Attendees (Capacity)</label>
+            <input type="number" id="maxAttendees" placeholder="e.g., 500" min="1" value="100" required>
+          </div>
+
+          <!-- Optional: Event Banner URL (modern touch) -->
+          <div class="input-group">
+            <label><i class="fas fa-image"></i> Banner Image URL (optional)</label>
+            <input type="url" id="imageUrl" placeholder="https://...">
+          </div>
+        </div>
+
+        <!-- Live Preview Section (interactive) -->
+        <div class="event-preview" id="livePreview">
+          <h4><i class="fas fa-eye"></i> Live preview</h4>
+          <p id="previewText">Fill in details to see your event summary ✨</p>
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="btn-secondary"><i class="fas fa-undo-alt"></i> Clear</button>
+          <button type="submit" class="btn-primary"><i class="fas fa-sparkles"></i> Create Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About SG Balekundri</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Why Choose Us</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Press & Media</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect With Us</h4>
+        <ul>
+          <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+          <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Let Us Help You</h4>
+        <ul>
+          <li><a href="#">Your Account</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Event Booking Guide</a></li>
+          <li><a href="#">Cancellation Policy</a></li>
+          <li><a href="#">Contact Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Join the community</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.75rem;">Get latest event alerts</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>© 2025 Nexus Events — Part of SG Balekundri Tech Community. All rights reserved. ✨ Seamless event discovery</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Live preview update based on form fields
+  const eventNameInput = document.getElementById('eventName');
+  const eventTypeSelect = document.getElementById('eventType');
+  const venueInput = document.getElementById('venue');
+  const dateInput = document.getElementById('eventDate');
+  const timeInput = document.getElementById('eventTime');
+  const maxAttendeesInput = document.getElementById('maxAttendees');
+  const descTextarea = document.getElementById('description');
+  const previewText = document.getElementById('previewText');
+
+  function updateLivePreview() {
+    const name = eventNameInput.value.trim() || '[Event Name]';
+    const type = eventTypeSelect.options[eventTypeSelect.selectedIndex]?.text || 'Conference';
+    const venue = venueInput.value.trim() || '[Venue]';
+    const date = dateInput.value ? new Date(dateInput.value).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'TBD';
+    const time = timeInput.value || 'TBD';
+    const capacity = maxAttendeesInput.value || '0';
+    const descPreview = descTextarea.value.trim() ? descTextarea.value.substring(0, 80) + (descTextarea.value.length > 80 ? '…' : '') : 'No description yet.';
+    
+    previewText.innerHTML = `
+      <strong><i class="fas fa-star-of-life"></i> ${escapeHtml(name)}</strong><br>
+      <span><i class="fas fa-tag"></i> ${escapeHtml(type)} &nbsp;|&nbsp; <i class="fas fa-map-pin"></i> ${escapeHtml(venue)}</span><br>
+      <span><i class="far fa-calendar-alt"></i> ${escapeHtml(date)} at ${escapeHtml(time)} &nbsp;|&nbsp; <i class="fas fa-chair"></i> Capacity: ${escapeHtml(capacity)}</span><br>
+      <span class="helper-text" style="margin-top: 5px;">📄 ${escapeHtml(descPreview)}</span>
+    `;
+  }
+  
+  // Simple escape to avoid injection
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+
+  // attach input events
+  const formFields = [eventNameInput, eventTypeSelect, venueInput, dateInput, timeInput, maxAttendeesInput, descTextarea];
+  formFields.forEach(field => {
+    if (field) field.addEventListener('input', updateLivePreview);
+    if (field && field.tagName === 'SELECT') field.addEventListener('change', updateLivePreview);
+  });
+  updateLivePreview();
+
+  // Handle form submission
+  const createForm = document.getElementById('createEventForm');
+  createForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const eventName = document.getElementById('eventName').value.trim();
+    const eventType = document.getElementById('eventType').value;
+    const venue = document.getElementById('venue').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const eventDate = document.getElementById('eventDate').value;
+    const eventTime = document.getElementById('eventTime').value;
+    const maxAttendees = document.getElementById('maxAttendees').value;
+    
+    if (!eventName || !venue || !eventDate || !eventTime) {
+      alert("⚠️ Please fill in all required fields (Event Name, Venue, Date, Time).");
+      return;
+    }
+    
+    if (parseInt(maxAttendees) <= 0) {
+      alert("👥 Max attendees must be at least 1.");
+      return;
+    }
+    
+    // Success simulation with modern toast-like alert
+    alert(`✨ "${eventName}" has been created successfully!\n\n📌 Type: ${eventType}\n📍 Venue: ${venue}\n📅 Date: ${eventDate} at ${eventTime}\n👥 Capacity: ${maxAttendees}\n\nYour event will appear on the homepage soon.`);
+    
+    // Optional: reset form or redirect
+    // createForm.reset();
+    // updateLivePreview();
+    // window.location.href = "index.html";
+  });
+  
+  // Reset button behavior (clear live preview after reset)
+  const resetBtn = document.querySelector('button[type="reset"]');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function() {
+      setTimeout(() => {
+        updateLivePreview();
+      }, 10);
+    });
+  }
+  
+  // additional styling for current date min (prevent past dates)
+  const today = new Date().toISOString().split('T')[0];
+  if (dateInput) dateInput.setAttribute('min', today);
+</script>
+
+<!-- extra animation for card -->
+<style>
+  .form-card {
+    transition: all 0.25s;
+  }
+  .btn-primary:active {
+    transform: scale(0.96);
+  }
+  .event-preview {
+    transition: background 0.2s;
+  }
+  .input-group input, .input-group select, .input-group textarea {
+    transition: 0.2s;
+  }
+</style>
+</body>
+</html>
